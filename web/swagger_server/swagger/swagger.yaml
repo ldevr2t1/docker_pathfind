@@ -1,0 +1,211 @@
+---
+swagger: "2.0"
+info:
+  description: "API developed for the pathfinding storage. To start, post to root\
+    \ to obtain a UID and then post away using the UID"
+  version: "1.0.9"
+  title: "Pathfinding Storage API"
+host: "192.168.99.100:5000"
+basePath: "/v1"
+schemes:
+- "https"
+paths:
+  /:
+    get:
+      tags:
+      - "uid"
+      summary: "Returns the current versions information"
+      description: "Get all of the details of the current version"
+      operationId: "root_get"
+      produces:
+      - "application/json"
+      - "application/xml"
+      parameters: []
+      responses:
+        200:
+          description: "Get current version details"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Generic_Object"
+        500:
+          description: "Unexpected error"
+          schema:
+            $ref: "#/definitions/Error"
+        default:
+          description: "Unexpected error"
+          schema:
+            $ref: "#/definitions/Error"
+      x-swagger-router-controller: "swagger_server.controllers.uid_controller"
+    post:
+      tags:
+      - "uid"
+      summary: "creates a new uid"
+      description: "return the new generated"
+      operationId: "root_post"
+      produces:
+      - "application/json"
+      - "application/xml"
+      parameters: []
+      responses:
+        200:
+          description: "return new generated uid"
+          schema:
+            $ref: "#/definitions/pid_post"
+        500:
+          description: "Unexpected error"
+          schema:
+            $ref: "#/definitions/Error"
+      x-swagger-router-controller: "swagger_server.controllers.uid_controller"
+  /{uid}:
+    get:
+      tags:
+      - "uid"
+      summary: "get the particular uid for the version"
+      description: "Will return the current object(s) stored for the uid\n"
+      operationId: "uid_get"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/json"
+      - "application/xml"
+      parameters:
+      - name: "uid"
+        in: "path"
+        description: "the UID"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        200:
+          description: "The data for the uid/Version"
+          schema:
+            $ref: "#/definitions/uid_Info"
+        404:
+          description: "UID could not be found"
+          schema:
+            $ref: "#/definitions/Generic_Object"
+        500:
+          description: "Unexpected error"
+          schema:
+            $ref: "#/definitions/Error"
+      x-swagger-router-controller: "swagger_server.controllers.uid_controller"
+    post:
+      tags:
+      - "uid"
+      summary: "update an existing uid"
+      description: "Will return the current object(s) stored for the uid.\nUsing a\
+        \ Release Consistency Model - The data is visible after a 200 success.\n"
+      operationId: "uid_post"
+      produces:
+      - "application/json"
+      - "application/xml"
+      parameters:
+      - name: "uid"
+        in: "path"
+        description: "the UID"
+        required: true
+        type: "integer"
+        format: "int64"
+      - in: "body"
+        name: "body"
+        description: "Information/object for the uid"
+        required: true
+        schema:
+          $ref: "#/definitions/Generic_Object"
+      responses:
+        200:
+          description: "return success"
+        400:
+          description: "Bad request - inavlid json"
+        404:
+          description: "UID could not be found"
+          schema:
+            $ref: "#/definitions/Generic_Object"
+        500:
+          description: "Unexpected error"
+          schema:
+            $ref: "#/definitions/Error"
+      x-swagger-router-controller: "swagger_server.controllers.uid_controller"
+    put:
+      tags:
+      - "uid"
+      summary: "update an existing uid"
+      description: "Will return the current object(s) stored for the uid. Using a\
+        \ Release Consistency Model - The data is visible after a 200 success."
+      operationId: "uid_put"
+      produces:
+      - "application/json"
+      - "application/xml"
+      parameters:
+      - name: "uid"
+        in: "path"
+        description: "the uid"
+        required: true
+        type: "integer"
+        format: "int64"
+      - in: "body"
+        name: "body"
+        description: "Information/object for the uid"
+        required: true
+        schema:
+          $ref: "#/definitions/Generic_Object"
+      responses:
+        200:
+          description: "Updated"
+        400:
+          description: "Bad request - inavlid json"
+        404:
+          description: "UID could not be found"
+          schema:
+            $ref: "#/definitions/Generic_Object"
+        500:
+          description: "Unexpected error"
+          schema:
+            $ref: "#/definitions/Error"
+      x-swagger-router-controller: "swagger_server.controllers.uid_controller"
+    delete:
+      tags:
+      - "uid"
+      summary: "delete a uid"
+      description: "delete a uid\n"
+      operationId: "uid_delete"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/json"
+      - "application/xml"
+      parameters:
+      - name: "uid"
+        in: "path"
+        description: "the UID"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        200:
+          description: "Deleted"
+        500:
+          description: "Unexpected error"
+          schema:
+            $ref: "#/definitions/Error"
+      x-swagger-router-controller: "swagger_server.controllers.uid_controller"
+definitions:
+  Generic_Object:
+    type: "object"
+  uid_Info:
+    type: "object"
+  pid_post:
+    properties:
+      uid:
+        type: "integer"
+        format: "int32"
+  Error:
+    properties:
+      code:
+        type: "integer"
+        format: "int32"
+      message:
+        type: "string"
