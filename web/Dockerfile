@@ -13,10 +13,7 @@ RUN pip3 install Flask-API
 RUN pip install Flask-API
 RUN pip3 install flask
 RUN pip3 install markdown
-RUN pip install python-firebase
-
-#download screen
-RUN apt-get install -y screen
+#RUN pip install python-firebase
 
 #download pymongo
 RUN apt-get install -y mongodb
@@ -25,9 +22,6 @@ RUN pip install pymongo
 COPY . /app
 WORKDIR /app
 RUN pip3 install -r requirements.txt
-
-RUN mongod &
-
 
 #Expose port 8080 for testing
 EXPOSE 5000

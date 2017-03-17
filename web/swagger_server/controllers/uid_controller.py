@@ -1,5 +1,6 @@
 import connexion
 import json
+import os
 from flask import jsonify
 from flask.ext.api import status
 from swagger_server.models.error import Error
@@ -12,7 +13,7 @@ from ..util import deserialize_date, deserialize_datetime
 from pymongo import MongoClient
 from flask.ext.api import status
 
-client = MongoClient()
+client = MongoClient(os.environ['DB_PORT_27017_TCP_ADDR'],27017)
 db = client.path_db
 
 def create_json(uid, body):
