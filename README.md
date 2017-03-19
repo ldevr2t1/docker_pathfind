@@ -1,4 +1,7 @@
-Server Image
+#General Server Image
+##Accessing the Website/Server ui
+*`Go to the link [**Database Server Link**](<http://ec2-35-167-218-237.us-west-2.compute.amazonaws.com:8080/v1/ui/>)`*
+
 ### How-to
 1. go ahead and gitclone this repo
 `git clone https://github.com/ldevr2t1/docker_pathfind.git`
