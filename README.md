@@ -8,7 +8,7 @@
 1. go ahead and gitclone this repo
 `git clone https://github.com/ldevr2t1/docker_pathfind.git`
 2. navigate into the web directory (i.e. cd web)
-3. run docker commands to get server running
+3. run docker commands to get server running - may have to **sudo**
     * `docker-compose build`
     * `docker-compose run`
 
