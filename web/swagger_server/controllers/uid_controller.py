@@ -62,7 +62,7 @@ def uid_get(uid):
 
 def post_and_put(uid, body):
 	#this checks if incoming data is valid json and for valid uid
-	if connexion.request.is_json:
+	if body != None:
 		body = GenericObject.from_dict(connexion.request.get_json())
 		if db.posts.find_one_and_update({"uid":str(uid)}, {"$set": {"body": body}}) is None:
 			return get_status(404, "COULD NOT FIND"), status.HTTP_404_NOT_FOUND
