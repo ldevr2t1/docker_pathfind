@@ -62,7 +62,7 @@ def uid_get(uid):
 
 def post_and_put(uid, body):
 	#this checks if incoming data is valid json and for valid uid
-	if body != None:
+	if connexion.request.is_json:
 		body = GenericObject.from_dict(connexion.request.get_json())
 		if db.posts.find_one_and_update({"uid":str(uid)}, {"$set": {"body": body}}) is None:
 			return get_status(404, "COULD NOT FIND"), status.HTTP_404_NOT_FOUND
@@ -70,10 +70,23 @@ def post_and_put(uid, body):
 		return get_status(200, "OK")
 	else:
 		return get_status(500, "Invalid JSON"), status.HTTP_500_INTERNAL_SERVER_ERROR
+	
+def post_and_put_v2(uid, body):
+	#this checks if incoming data is valid json and for valid uid
+	try:
+		str_body = str(body).replace('\'', '\"')
+		json.loads(str_body)
+		body = GenericObject.from_dict(connexion.request.get_json())
+		if db.posts.find_one_and_update({"uid":str(uid)}, {"$set": {"body": body}}) is None:
+			return get_status(404, "COULD NOT FIND"), status.HTTP_404_NOT_FOUND
+		#need to write better messages to return for a success
+		return get_status(200, "OK")
+	except ValueError:
+		return get_status(500, "Invalid JSON"), status.HTTP_500_INTERNAL_SERVER_ERROR
 
 def uid_post(uid, body):
-	return post_and_put(uid, body)
+	return post_and_put_v2(uid, body)
 
 
 def uid_put(uid, body):
-	return post_and_put(uid, body)
+	return post_and_put_v2(uid, body)
