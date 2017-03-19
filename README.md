@@ -31,5 +31,13 @@
     -`    EXPOSE <port_number>`
 
 
+### If you want to test locally (i.e. localhost)
+1. Set **__main__.py** **'host'** parameter to **'0.0.0.0'**
+	- **In __main__.py:** `app.run(host='<your_address>', port=<port_number>)`
+
+2. Set **swagger.yaml** file's **host:** to your docker-machine's IP-Address
+	- `Run **Docker-machine ip** to get Ip-Address`
+	- **In swagger.yaml:** `host: "<your_address>:<port_number>"`
+3. Set your port_numbers accordingly (i.e. follow instructions for port number [above])
 #### NOTE
 This is under the assumption you have docker installed.
