@@ -17,7 +17,7 @@
 6.  If you cannot access the UI then change the **'host'** address in the **swagger.yaml** file
     * **To get Machine ip address:** `Run docker-machine ip` 
     * **Update swagger.yaml:** `host: "<Machine Ip-Address>"`
-
+    * Repeat steps 4 and 5
 #### Comment on locally running server
 - Docker usually will use 192.168.99.100 for localhost 
 	- if not then **run docker-machine ip** to get machine-ip
