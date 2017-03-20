@@ -2,15 +2,26 @@
 
 
 ## Accessing the Website/Server ui
-**Go to this link** [**Database Server Link**](<http://ec2-35-167-218-237.us-west-2.compute.amazonaws.com:8080/v1/ui/>)
+**To access Existing EC2 Server Go to this link** [**Database Server Link**](<http://ec2-35-167-218-237.us-west-2.compute.amazonaws.com:8080/v1/ui/>)
 
-### How-to
+### How-to run server
 1. go ahead and gitclone this repo
 `git clone https://github.com/ldevr2t1/docker_pathfind.git`
-2. navigate into the web directory (i.e. cd web)
-3. run docker commands to get server running - may have to **sudo**
+2. Run **git checkout local**
+3. Navigate into the web directory (i.e. cd web)
+4. Run docker commands to get server running - may have to **sudo**
     * `docker-compose build`
-    * `docker-compose run`
+    * `docker-compose up`
+5. Access your machine-ip address (docker-machine ip) in your web browser
+    * `The UI should be viewable at **192.168.99.100/v1/ui**`
+6.  If you cannot access the UI then change the **'host'** address in the **swagger.yaml** file
+    * **To get Machine ip address:** `Run docker-machine ip` 
+    * **Update swagger.yaml:** `host: "<Machine Ip-Address>"`
+
+#### Comment on locally running server
+- Docker usually will use 192.168.99.100 for localhost 
+	- if not then **run docker-machine ip** to get machine-ip
+
 
 ### To configure host/ui address
 1. To change the server's IP-address edit the **'host'** parameter in main.
@@ -31,13 +42,6 @@
     -`    EXPOSE <port_number>`
 
 
-### If you want to test locally (i.e. localhost)
-1. Set **__main__.py** **'host'** parameter to **'0.0.0.0'**
-	- **In __main__.py:** `app.run(host='<your_address>', port=<port_number>)`
 
-2. Set **swagger.yaml** file's **host:** to your docker-machine's IP-Address
-	- `Run **Docker-machine ip** to get Ip-Address`
-	- **In swagger.yaml:** `host: "<your_address>:<port_number>"`
-3. Set your port_numbers accordingly (i.e. follow instructions for port number [above])
 #### NOTE
 This is under the assumption you have docker installed.
